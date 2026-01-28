@@ -167,7 +167,7 @@ double ModelSolver01_06::flaplace_composite(double z, const QMap<QString, double
     double kf = p.value("kf");
     double km = p.value("km");
 
-    // [修改] 强制计算无因次缝长 LfD = Lf / L
+    // 强制计算无因次缝长 LfD = Lf / L
     // 即使传入了参数 map，也优先使用 Lf 和 L 计算 LfD，确保数据一致性
     double L = p.value("L");
     double Lf = p.value("Lf");
@@ -242,6 +242,9 @@ double ModelSolver01_06::PWD_composite(double z, double fs1, double fs2, double 
 
     // 边界条件处理
     if (!isInfinite) {
+        // 防止 reD 无效导致 Bessel K0(0) = Inf
+        if (reD <= 1e-5) return 0.0;
+
         double arg_re = gama2 * reD;
         double i1_re_s = scaled_besseli(1, arg_re);
         double i0_re_s = scaled_besseli(0, arg_re);
@@ -349,3 +352,4 @@ double ModelSolver01_06::factorial(int n) {
     for(int i=2;i<=n;++i) r*=i;
     return r;
 }
+

@@ -3,7 +3,7 @@
  * 文件作用: 拟合参数图表管理类实现文件
  * 功能描述:
  * 1. 初始化参数表格样式。
- * 2. 实现 resetParams 逻辑：根据模型类型（1/3/5 或 2/4/6）自动勾选默认拟合参数（isFit=true）。
+ * 2. 实现 resetParams 逻辑：根据模型类型自动勾选默认拟合参数（isFit=true）。
  * 3. 实现 eventFilter 逻辑：支持鼠标滚轮调节参数，增加了数值上下限检查 (min/max)。
  * 4. 引入 QTimer 实现滚轮事件的防抖动处理，避免快速滚动导致软件闪退。
  * 5. 保持 LfD (无因次缝长) 的自动计算与只读逻辑，LfD 默认显示但不拟合。
@@ -173,6 +173,7 @@ void FittingParameterChart::setModelManager(ModelManager *m)
 }
 
 // [核心修改] 根据模型类型获取默认需要拟合的参数列表
+// 增加了 reD 的显示逻辑，防止边界模型下该参数不可见
 QStringList FittingParameterChart::getDefaultFitKeys(ModelManager::ModelType type)
 {
     QStringList keys;
@@ -186,9 +187,11 @@ QStringList FittingParameterChart::getDefaultFitKeys(ModelManager::ModelType typ
     if (type == ModelManager::Model_1 || type == ModelManager::Model_3 || type == ModelManager::Model_5) {
         keys << "cD" << "C" << "S";
     }
-    // 模型 2, 4, 6: 不需要井储和表皮拟合 (使用固定值或恒定井储)
-    else {
-        // do nothing
+
+    // [优化] 模型 3, 4, 5, 6: 增加 边界半径 reD (有边界模型)
+    if (type == ModelManager::Model_3 || type == ModelManager::Model_4 ||
+        type == ModelManager::Model_5 || type == ModelManager::Model_6) {
+        keys << "reD";
     }
 
     return keys;
@@ -401,8 +404,8 @@ void FittingParameterChart::getParamDisplayInfo(const QString &name, QString &ch
     else if(name == "L")      { chName = "水平井长";       unit = "m"; }
     else if(name == "Lf")     { chName = "裂缝半长";       unit = "m"; }
     else if(name == "nf")     { chName = "裂缝条数";       unit = "条"; }
-    else if(name == "kf")     { chName = "内区渗透率";     unit = "mD"; }
-    else if(name == "km")     { chName = "外区渗透率";     unit = "mD"; }
+    else if(name == "kf")     { chName = "内区渗透率";     unit = "D"; }
+    else if(name == "km")     { chName = "外区渗透率";     unit = "D"; }
     else if(name == "reD")    { chName = "无因次泄油半径"; unit = "无因次"; }
     else if(name == "lambda1"){ chName = "窜流系数";       unit = "无因次"; }
     else if(name == "omega1") { chName = "内区储容比";     unit = "无因次"; }
@@ -413,3 +416,4 @@ void FittingParameterChart::getParamDisplayInfo(const QString &name, QString &ch
     else { chName = name; unit = ""; }
     symbol = name; uniSym = name;
 }
+
