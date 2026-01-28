@@ -280,7 +280,7 @@ QLabel {
           <item row="0" column="0">
            <widget class="QLabel" name="label_kf">
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;内区渗透率 k&lt;sub&gt;f&lt;/sub&gt; (mD):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;内区渗透率 k&lt;span style=&quot; vertical-align:sub;&quot;&gt;f&lt;/span&gt; (D):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>
@@ -290,7 +290,7 @@ QLabel {
           <item row="1" column="0">
            <widget class="QLabel" name="label_km">
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;外区渗透率 k&lt;sub&gt;m&lt;/sub&gt; (mD):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;外区渗透率 k&lt;span style=&quot; vertical-align:sub;&quot;&gt;m&lt;/span&gt; (D):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
            </widget>
           </item>

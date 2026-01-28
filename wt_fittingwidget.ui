@@ -248,6 +248,13 @@ background-color: white;</string>
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="btnSamplingSettings">
+         <property name="text">
+          <string>数据抽样设置...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <layout class="QHBoxLayout" name="horizontalLayout_Actions">
          <item>
           <widget class="QPushButton" name="btnRunFit">
